@@ -3,41 +3,41 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Language Lens · Find the difference</title>
+    <title>Language Lens</title>
     <link rel="stylesheet" href="/style.css" />
     <script type="module" src="/app.js"></script>
   </head>
   <body>
     <header>
-      <a class="brand" href="/"><span>λ</span> LANGUAGE LENS</a
-      ><span>FINITE MACHINES / INFINITE LANGUAGES</span
-      ><a href="https://github.com/Michaelhoang8/language-lens">Source ↗</a>
+      <h1>Language Lens</h1>
+      <span>DFA comparison</span>
     </header>
     <main>
-      <section class="opening">
-        <p class="eyebrow">AN AUTOMATA NOTEBOOK</p>
-        <h1>Same language.<br /><em>Different machinery?</em></h1>
-        <p>
-          Compare two deterministic machines.<br />Find the smallest difference, or prove there is
-          none.
-        </p>
-      </section>
       <div class="toolbar">
         <label for="example"
-          >Start with a question<select id="example">
-            <option value="equivalent">Can five states say the same thing as two?</option>
-            <option value="difference">Ends with 1, or contains a 1?</option>
-            <option value="empty">What if the empty string is enough?</option>
+          >Example<select id="example">
+            <option value="equivalent">Equivalent machines</option>
+            <option value="difference">Different languages</option>
+            <option value="empty">Empty-string difference</option>
           </select></label
-        ><button id="compare" class="primary">Compare the languages ↗</button>
+        ><button id="compare" class="primary">Compare languages</button>
       </div>
       <p id="notice" role="status" aria-live="polite"></p>
+      <section class="verdict" aria-label="Language comparison">
+        <div id="symbol" aria-hidden="true">≡</div>
+        <div>
+          <h2 id="verdict-title">Comparing…</h2>
+          <p id="verdict-text"></p>
+          <button id="witness" hidden>Trace the counterexample →</button
+          ><button id="report">Export analysis ↓</button>
+        </div>
+      </section>
       <section class="machines" aria-label="Machines to compare">
         <article class="machine">
           <div class="machine-heading">
             <span class="letter">A</span>
             <div>
-              <h2>The first machine</h2>
+              <h2>Machine A</h2>
               <p id="summary-a"></p>
             </div>
             <button id="download-a" aria-label="Download machine A JSON">JSON ↓</button>
@@ -64,7 +64,7 @@
           <div class="machine-heading">
             <span class="letter">B</span>
             <div>
-              <h2>The second machine</h2>
+              <h2>Machine B</h2>
               <p id="summary-b"></p>
             </div>
             <button id="download-b" aria-label="Download machine B JSON">JSON ↓</button>
@@ -88,20 +88,10 @@
           </details>
         </article>
       </section>
-      <section class="verdict" aria-label="Language comparison">
-        <div id="symbol" aria-hidden="true">≡</div>
-        <div>
-          <p class="eyebrow">THE VERDICT</p>
-          <h2 id="verdict-title">Comparing…</h2>
-          <p id="verdict-text"></p>
-          <button id="witness" hidden>Trace the counterexample →</button
-          ><button id="report">Export analysis ↓</button>
-        </div>
-      </section>
+
       <section class="word-section">
         <div>
-          <p class="eyebrow">FOLLOW A SINGLE WORD</p>
-          <h2>One symbol at a time.</h2>
+          <h2>Word trace</h2>
           <p>
             Blank input means the empty string, ε.<br />Symbols outside a machine’s alphabet enter a
             rejecting sink, ∅.
@@ -123,8 +113,9 @@
           <div id="paths"></div>
         </div>
       </section>
-      <section class="notes">
-        <h2>What counts as proof?</h2>
+      <details class="notes">
+        <summary>Comparison method &amp; limits</summary>
+
         <div>
           <p>
             Comparison explores the reachable product of both machines, breadth first. A pair with
@@ -145,11 +136,7 @@
             >Explore the theory ↗</a
           >
         </div>
-      </section>
+      </details>
     </main>
-    <footer>
-      <span>SMALL MACHINES. PRECISE QUESTIONS.</span
-      ><span>Local computation · no packages · no accounts</span>
-    </footer>
   </body>
 </html>

@@ -25,7 +25,7 @@ function invalidate() {
   revision++;
   analysis = null;
   controls(false);
-  $('verdict-title').textContent = 'The machines have changed.';
+  $('verdict-title').textContent = 'Comparison pending';
   $('verdict-text').textContent =
     'Compare again to update the proof, transition tables, and minimizations.';
   $('symbol').textContent = '?';
@@ -97,9 +97,7 @@ function build() {
     for (const side of sides) renderMachine(side);
     const c = analysis.comparison;
     $('symbol').textContent = c.equivalent ? '≡' : '≠';
-    $('verdict-title').textContent = c.equivalent
-      ? 'Different machines. The same language.'
-      : 'There is a word that separates them.';
+    $('verdict-title').textContent = c.equivalent ? 'Equivalent languages' : 'Different languages';
     $('verdict-text').textContent = c.equivalent
       ? `All ${c.visited} reachable state pairs agree on acceptance. This is an exhaustive equivalence check, not a sample of words.`
       : `Shortest counterexample: ${c.witness === '' ? 'ε (the empty string)' : JSON.stringify(c.witness)}. Machine A ${c.left.accepted ? 'accepts' : 'rejects'}; machine B ${c.right.accepted ? 'accepts' : 'rejects'}. Examined ${c.visited} state pairs in breadth-first order.`;

@@ -6,6 +6,10 @@ Compare complete deterministic finite automata, find a shortest distinguishing i
 
 ![Language Lens](docs/workbench.png)
 
+## Interface
+
+The equivalence result appears first, followed by side-by-side transition tables for machines A and B. Their blue and brown accents continue into the word traces below. JSON editing and minimization remain attached to each machine, and the comparison method is available in an expandable section.
+
 ## Run
 
 ```sh
