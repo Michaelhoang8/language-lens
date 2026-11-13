@@ -1,10 +1,155 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Language Lens · Find the difference</title><link rel="stylesheet" href="/style.css"><script type="module" src="/app.js"></script></head><body><header><a class="brand" href="/"><span>λ</span> LANGUAGE LENS</a><span>FINITE MACHINES / INFINITE LANGUAGES</span><a href="https://github.com/Michaelhoang8/language-lens">Source ↗</a></header><main>
-<section class="opening"><p class="eyebrow">AN AUTOMATA NOTEBOOK</p><h1>Same language.<br><em>Different machinery?</em></h1><p>Compare two deterministic machines.<br>Find the smallest difference, or prove there is none.</p></section>
-<div class="toolbar"><label for="example">Start with a question<select id="example"><option value="equivalent">Can five states say the same thing as two?</option><option value="difference">Ends with 1, or contains a 1?</option><option value="empty">What if the empty string is enough?</option></select></label><button id="compare" class="primary">Compare the languages ↗</button></div><p id="notice" role="status" aria-live="polite"></p>
-<section class="machines" aria-label="Machines to compare">
-<article class="machine"><div class="machine-heading"><span class="letter">A</span><div><h2>The first machine</h2><p id="summary-a"></p></div><button id="download-a" aria-label="Download machine A JSON">JSON ↓</button></div><div id="table-a" class="transition-table"></div><details><summary>Edit machine A · JSON</summary><label class="sr-only" for="source-a">Machine A JSON</label><textarea id="source-a" rows="14" maxlength="50000" spellcheck="false"></textarea><label class="import">Import machine A<input id="import-a" type="file" accept=".json,application/json"></label></details><details><summary id="min-summary-a">Minimization</summary><div id="min-a"></div><div class="actions"><button id="minimize-a">Use minimized A</button><button id="dot-a">Export A as DOT ↓</button></div></details></article>
-<article class="machine"><div class="machine-heading"><span class="letter">B</span><div><h2>The second machine</h2><p id="summary-b"></p></div><button id="download-b" aria-label="Download machine B JSON">JSON ↓</button></div><div id="table-b" class="transition-table"></div><details><summary>Edit machine B · JSON</summary><label class="sr-only" for="source-b">Machine B JSON</label><textarea id="source-b" rows="14" maxlength="50000" spellcheck="false"></textarea><label class="import">Import machine B<input id="import-b" type="file" accept=".json,application/json"></label></details><details><summary id="min-summary-b">Minimization</summary><div id="min-b"></div><div class="actions"><button id="minimize-b">Use minimized B</button><button id="dot-b">Export B as DOT ↓</button></div></details></article></section>
-<section class="verdict" aria-label="Language comparison"><div id="symbol" aria-hidden="true">≡</div><div><p class="eyebrow">THE VERDICT</p><h2 id="verdict-title">Comparing…</h2><p id="verdict-text"></p><button id="witness" hidden>Trace the counterexample →</button><button id="report">Export analysis ↓</button></div></section>
-<section class="word-section"><div><p class="eyebrow">FOLLOW A SINGLE WORD</p><h2>One symbol at a time.</h2><p>Blank input means the empty string, ε.<br>Symbols outside a machine’s alphabet enter a rejecting sink, ∅.</p></div><div><form id="word-form"><label class="sr-only" for="word">Input word</label><input id="word" maxlength="2000" value="101" placeholder="Leave blank for ε" autocomplete="off" spellcheck="false"><button id="trace-word" class="primary">Trace word →</button></form><p id="word-notice" role="status" aria-live="polite"></p><div id="paths"></div></div></section>
-<section class="notes"><h2>What counts as proof?</h2><div><p>Comparison explores the reachable product of both machines, breadth first. A pair with different acceptance produces a shortest distinguishing word. If no reachable pair disagrees, the languages are equivalent.</p><p>Minimization keeps reachable states, separates accepting from rejecting states, and repeatedly splits groups by their transition destinations. The remaining groups become the states of a complete minimal DFA.</p><p>Use 1–32 states and 1–6 letter or digit symbols per machine. Every state needs exactly one transition per symbol. These are deterministic finite automata, with no epsilon transitions.</p><a href="https://www.cs.cornell.edu/courses/cs4120/2026sp/notes/leximpl/">Explore the theory ↗</a></div></section>
-</main><footer><span>SMALL MACHINES. PRECISE QUESTIONS.</span><span>Local computation · no packages · no accounts</span></footer></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Language Lens · Find the difference</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="/"><span>λ</span> LANGUAGE LENS</a
+      ><span>FINITE MACHINES / INFINITE LANGUAGES</span
+      ><a href="https://github.com/Michaelhoang8/language-lens">Source ↗</a>
+    </header>
+    <main>
+      <section class="opening">
+        <p class="eyebrow">AN AUTOMATA NOTEBOOK</p>
+        <h1>Same language.<br /><em>Different machinery?</em></h1>
+        <p>
+          Compare two deterministic machines.<br />Find the smallest difference, or prove there is
+          none.
+        </p>
+      </section>
+      <div class="toolbar">
+        <label for="example"
+          >Start with a question<select id="example">
+            <option value="equivalent">Can five states say the same thing as two?</option>
+            <option value="difference">Ends with 1, or contains a 1?</option>
+            <option value="empty">What if the empty string is enough?</option>
+          </select></label
+        ><button id="compare" class="primary">Compare the languages ↗</button>
+      </div>
+      <p id="notice" role="status" aria-live="polite"></p>
+      <section class="machines" aria-label="Machines to compare">
+        <article class="machine">
+          <div class="machine-heading">
+            <span class="letter">A</span>
+            <div>
+              <h2>The first machine</h2>
+              <p id="summary-a"></p>
+            </div>
+            <button id="download-a" aria-label="Download machine A JSON">JSON ↓</button>
+          </div>
+          <div id="table-a" class="transition-table"></div>
+          <details>
+            <summary>Edit machine A · JSON</summary>
+            <label class="sr-only" for="source-a">Machine A JSON</label
+            ><textarea id="source-a" rows="14" maxlength="50000" spellcheck="false"></textarea
+            ><label class="import"
+              >Import machine A<input id="import-a" type="file" accept=".json,application/json"
+            /></label>
+          </details>
+          <details>
+            <summary id="min-summary-a">Minimization</summary>
+            <div id="min-a"></div>
+            <div class="actions">
+              <button id="minimize-a">Use minimized A</button
+              ><button id="dot-a">Export A as DOT ↓</button>
+            </div>
+          </details>
+        </article>
+        <article class="machine">
+          <div class="machine-heading">
+            <span class="letter">B</span>
+            <div>
+              <h2>The second machine</h2>
+              <p id="summary-b"></p>
+            </div>
+            <button id="download-b" aria-label="Download machine B JSON">JSON ↓</button>
+          </div>
+          <div id="table-b" class="transition-table"></div>
+          <details>
+            <summary>Edit machine B · JSON</summary>
+            <label class="sr-only" for="source-b">Machine B JSON</label
+            ><textarea id="source-b" rows="14" maxlength="50000" spellcheck="false"></textarea
+            ><label class="import"
+              >Import machine B<input id="import-b" type="file" accept=".json,application/json"
+            /></label>
+          </details>
+          <details>
+            <summary id="min-summary-b">Minimization</summary>
+            <div id="min-b"></div>
+            <div class="actions">
+              <button id="minimize-b">Use minimized B</button
+              ><button id="dot-b">Export B as DOT ↓</button>
+            </div>
+          </details>
+        </article>
+      </section>
+      <section class="verdict" aria-label="Language comparison">
+        <div id="symbol" aria-hidden="true">≡</div>
+        <div>
+          <p class="eyebrow">THE VERDICT</p>
+          <h2 id="verdict-title">Comparing…</h2>
+          <p id="verdict-text"></p>
+          <button id="witness" hidden>Trace the counterexample →</button
+          ><button id="report">Export analysis ↓</button>
+        </div>
+      </section>
+      <section class="word-section">
+        <div>
+          <p class="eyebrow">FOLLOW A SINGLE WORD</p>
+          <h2>One symbol at a time.</h2>
+          <p>
+            Blank input means the empty string, ε.<br />Symbols outside a machine’s alphabet enter a
+            rejecting sink, ∅.
+          </p>
+        </div>
+        <div>
+          <form id="word-form">
+            <label class="sr-only" for="word">Input word</label
+            ><input
+              id="word"
+              maxlength="2000"
+              value="101"
+              placeholder="Leave blank for ε"
+              autocomplete="off"
+              spellcheck="false"
+            /><button id="trace-word" class="primary">Trace word →</button>
+          </form>
+          <p id="word-notice" role="status" aria-live="polite"></p>
+          <div id="paths"></div>
+        </div>
+      </section>
+      <section class="notes">
+        <h2>What counts as proof?</h2>
+        <div>
+          <p>
+            Comparison explores the reachable product of both machines, breadth first. A pair with
+            different acceptance produces a shortest distinguishing word. If no reachable pair
+            disagrees, the languages are equivalent.
+          </p>
+          <p>
+            Minimization keeps reachable states, separates accepting from rejecting states, and
+            repeatedly splits groups by their transition destinations. The remaining groups become
+            the states of a complete minimal DFA.
+          </p>
+          <p>
+            Use 1–32 states and 1–6 letter or digit symbols per machine. Every state needs exactly
+            one transition per symbol. These are deterministic finite automata, with no epsilon
+            transitions.
+          </p>
+          <a href="https://www.cs.cornell.edu/courses/cs4120/2026sp/notes/leximpl/"
+            >Explore the theory ↗</a
+          >
+        </div>
+      </section>
+    </main>
+    <footer>
+      <span>SMALL MACHINES. PRECISE QUESTIONS.</span
+      ><span>Local computation · no packages · no accounts</span>
+    </footer>
+  </body>
+</html>
